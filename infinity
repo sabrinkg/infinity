@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Infinity</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f9f9f9;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 800px; /* Increased size */
+      height: 400px; /* Increased size */
+    }
+
+    .dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #00bfff;
+      border-radius: 50%;
+      animation: pulse 4s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="pattern-container"></div>
+
+  <script>
+    const container = document.getElementById('pattern-container');
+    const dots = 70; // Increased number of dots for smoother curves
+
+    function createDot(x, y, delay) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      dot.style.animationDelay = `${delay}s`;
+      container.appendChild(dot);
+    }
+
+    for (let i = 0; i < dots; i++) {
+      const angle = (i / dots) * 2 * Math.PI; // Angle in radians
+
+      // Adjusted infinity loop equation for smoother, more curved edges
+      const x = 400 + (Math.cos(angle) * 250) / (1 + Math.sin(angle) ** 2); // Horizontal movement
+      const y = 200 + (Math.sin(angle) * 125 * Math.cos(angle)) / (1 + Math.sin(angle) ** 2); // Vertical movement
+
+      createDot(x, y, i * 0.08); // Adjusted delay for better spacing
+    }
+  </script>
+</body>
+</html>
